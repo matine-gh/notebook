@@ -1,0 +1,49 @@
+.loginContainer{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  flex: 1;
+}
+form{
+  border: #0033cc 5px solid;
+  padding: 2rem;
+}
+.formItem{
+  margin: 1rem 0;
+}
+.button{
+  text-align-last: center;
+}
+label{
+  margin-right: 1rem;
+}
+p{
+  font-size: small;
+  color: #ff0000;
+  direction: rtl;
+}
+.noteBox{
+  border: #ff1a8c 2px solid;
+  background-color: #ffe6f2;
+  margin: 1rem;
+  padding: 1rem;
+}
+.tag{
+  background-color: #ff1a8c;
+  width: fit-content;
+  padding: 5px;
+  margin-bottom: 1rem;
+}
+.diaries{
+  background-color: #99ffcc;
+}
+.work{
+  background-color: #a6a6a6;
+}
+.todoList{
+  background-color: #ffff66;
+}
+.other{
+  background-color: #00ccff;
+}
