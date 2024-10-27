@@ -1,32 +1,30 @@
 "use client";
-import axios from "axios";
-import { useQuery } from "@tanstack/react-query";
-import AddTodo from "@/app/components/AddTodo";
+import AddTodo, { TaskInterface } from "@/app/components/AddTodo";
+import useTasks from "@/app/queries/useTasks";
+import useTaskStore from "@/app/stores/useTaskStore";
 
 export default function Home() {
-  const getResponse = useQuery({
-    queryKey: ["getTodos"],
-    queryFn: async () => {
-      const response= await axios.get("https://dummyjson.com/todos");
-      return response.data.todos
-    },
-  });
+  const { tasks: serverTasks, isPending, editTask, error } = useTasks();
+  const { editTask: editLocalTask } = useTaskStore();
 
-  if (getResponse.isPending) return "Loading...";
+  if (isPending) return "Loading...";
 
-  if (getResponse.error) return "An error has occurred: " + getResponse.error.message;
+  if (error) return "An error has occurred: " + error?.message;
 
-  console.log(getResponse.data)
+  const handleEditTask = (item: TaskInterface) => {
+    const editedTask: TaskInterface = { ...item, checked: true };
+    editTask(editedTask);
+    editLocalTask(editedTask);
+  };
   return (
     <div>
       <AddTodo />
       <ul>
-        {getResponse.data.map((item) => {
+        {serverTasks.map((item: TaskInterface) => {
           return (
             <li key={item.id}>
-              <input type="checkbox" checked={item.completed} />
-              <span>{item.id} - </span>
-              {item.todo}
+              <input type="checkbox" checked={item.checked} onChange={() => handleEditTask(item)} />
+              {item.title}
             </li>
           );
         })}
